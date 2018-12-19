@@ -103,3 +103,180 @@ Route::get('goi-master', function () {
 //for
 //for...while
 //foreach
+
+
+//Bài 15 - Schema builder - Drop column in table
+//https://www.youtube.com/watch?v=VAt79RFi3nI&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=16
+Route::get('schema/drop-column', function () {
+    Schema::table('categories', function ($table) {
+        $table->dropColumn('description');
+    });
+});
+
+Route::get('schema/drop', function () {
+    Schema::dropIfExists('laravel');
+});
+
+//Bài 16 - Schema builder - Foreign Keys
+//https://www.youtube.com/watch?v=kVTzY7fXkBc&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=17
+Route::get('schema/create/category', function () {
+    Schema::create('category', function ($table) {
+        $table->increments('id');
+        $table->string('name');
+        $table->string('slug');
+        $table->timestamps();
+    });
+});
+
+Route::get('schema/create/product', function () {
+    Schema::create('product', function ($table) {
+        $table->increments('id');
+        $table->string('name');
+        $table->integer('cate_id')->unsigned();
+        $table->foreign('cate_id')->references('id')->on('category')->onDelete('cascade');
+        $table->timestamps();
+    });
+});
+
+//Bài 18, 19 - Migration
+//https://www.youtube.com/watch?v=VxIRKDb9X1w&index=19&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+// migrate
+//   migrate:fresh        Drop all tables and re-run all migrations
+//   migrate:install      Create the migration repository
+//   migrate:refresh      Reset and re-run all migrations
+//   migrate:reset        Rollback all database migrations
+//   migrate:rollback     Rollback the last database migration
+//   migrate:status       Show the status of each migration
+// php artisan make:migration create_(table_name)_table
+
+
+//Bài 20 - Seeding
+//Tạo dữ liệu mẫu để test
+
+
+//Bài 21 - Query Builder
+//https://www.youtube.com/watch?v=8bdXkbDAqjs&index=22&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('query/select-all', function () {
+    $data = DB::table('category')->get();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('query/select-column', function () {
+    $data = DB::table('category')->select('name')->where('id','=',1)->get();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('query/where-or', function () {
+    $data = DB::table('category')->where('id',1)->orWhere('id',2)->get();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+//Bài 22 - Query Builder
+//https://www.youtube.com/watch?v=eefns5FlS2s&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=23
+
+Route::get('query/order-by', function () {
+    $data = DB::table('category')->select('id','name','slug')->orderBy('name','ASC')->get();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('query/offset-limit', function () {
+    $data = DB::table('category')->skip(1)->take(2)->get();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('query/where-between', function () {
+    // $data = DB::table('category')->whereBetween('id',[1,2])->get();
+    $data = DB::table('category')->whereNotBetween('id',[1,2])->get();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('query/where-in', function () {
+    // $data = DB::table('category')->whereIn('id',[1,3])->get();
+    $data = DB::table('category')->whereNotIn('id',[1,3])->get();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+//Bài 23 - Query Builder
+//https://www.youtube.com/watch?v=wQvtB2XIeik&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=24
+
+Route::get('query/count', function () {
+    $data = DB::table('category')->count();
+    echo $data;
+});
+
+Route::get('query/max', function () {
+    // $data = DB::table('category')->max('name');
+    // $data = DB::table('category')->avg('id');
+    $data = DB::table('category')->sum('id');
+    echo $data;
+});
+
+//Bài 24 - Query builder - Join
+//https://www.youtube.com/watch?v=7yXrHdt9dyw&index=25&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('schema/create/product-2', function () {
+    Schema::create('product_2', function ($table) {
+        $table->increments('id');
+        $table->string('name');
+        $table->integer('cate_id')->unsigned();
+        $table->integer('price');
+        $table->timestamps();
+    });
+});
+Route::get('query/join', function () {
+    $data = DB::table('product')
+                ->join('category','category.id','=','product.cate_id')
+                ->select('product.*','category.slug')
+                ->get();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+//Bài 25 - Query builder - insert, insertGetId, update
+//https://www.youtube.com/watch?v=eBcJz1LWz4M&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=26
+
+Route::get('query/insert', function () {
+    DB::table('category')->insert([
+        'name' => 'Cột sân vườn',
+        'slug' => 'cot-san-vuon',
+    ]);
+    return "Insert thành công";
+});
+
+//insertGetId chỉ insert được 1 record
+Route::get('query/insertgetid', function () {
+    $id = DB::table('category')->insertGetId([
+        'name' => 'Đèn pha',
+        'slug' => 'den-pha',
+    ]);
+    return $id;
+});
+
+Route::get('query/update', function () {
+    DB::table('category')
+        ->where('id',5)
+        ->update(['name' => 'Đèn pha']);
+    return "Update thanh cong";
+});
+
+//Bài 26 - Eloquent ORM
+//https://www.youtube.com/watch?v=ZYWDhszTRAY&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=27
+// php artisan make:model Category --migration
+// or php artisan make:model Category -m
+
