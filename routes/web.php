@@ -280,3 +280,88 @@ Route::get('query/update', function () {
 // php artisan make:model Category --migration
 // or php artisan make:model Category -m
 
+//Bài 27 - Eloquent ORM
+//https://www.youtube.com/watch?v=bYqOdu1lu7Q&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=29
+
+Route::get('eloquent/all', function () {
+    $data = App\Category::all()->tojSon();
+    // $data = App\Category::all()->toArray();
+    // $data = App\Category::find(1)->toArray();
+    // $data = App\Category::findOrFail(1)->toArray();
+    
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
+});
+
+//Bài 28 - Eloquent ORM
+//https://www.youtube.com/watch?v=mnFVtaoMfBY&index=29&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('eloquent/where', function () {
+    // $data = App\Category::where('id',2)->get()->toArray();
+    // $data = App\Category::where('id',"=",2)->get()->toArray();
+    $data = App\Category::where('id',">",2)->firstOrFail()->toArray(); //firstOrFail không có get()
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('eloquent/take', function () {
+    $data = App\Category::all()->take(2)->toArray();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('eloquent/count', function () {
+    $data = App\Category::all()->count();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('eloquent/raw', function () {
+    $data = App\Category::whereRaw('id >= ? AND name LIKE ?',[1,'Đèn%'])->get()->toArray();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+//Bài 29 - Eloquent ORM - Chú ý về vị trí của select() trong Eloquent ORM
+//https://www.youtube.com/watch?v=dJFoxf23xmY&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=30
+
+//Bài 30 - Eloquent ORM - Thêm dữ liệu
+//https://www.youtube.com/watch?v=M-RHrQsN97U&index=31&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('eloquent/insert', function () {
+    $category = new App\Category;
+    $category->name = 'Đèn cầu';
+    $category->slug = 'den-cau';
+    if ($category->save()) {
+        echo "Thêm thành công";
+    }
+});
+
+Route::get('eloquent/create', function () {
+    $data = [
+        'name' => 'Đèn Toby',
+        'slug' => 'den-toby',
+    ];
+    App\Category::create($data);
+
+});
+
+Route::get('eloquent/update', function () {
+    $category = App\Category::find(2);
+    $category->name = 'Đèn Halumos';
+    $category->slug = 'den-halumos';
+    if ($category->save()) {
+        echo "Chinh sua thanh cong";
+    }
+});
+
+Route::get('eloquent/delete', function () {
+    App\Category::destroy(5);
+});
+
+//Bài 31 - Eloquent ORM - 

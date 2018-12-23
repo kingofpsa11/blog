@@ -11,18 +11,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(Product2TableSeeder::class);
-        // DB::table('category')->insert([
-        //     ['name'=>'Đèn sân vườn','slug'=>'den-san-vuon'],
-        //     ['name'=>'Đèn đường phố','slug'=>'den-duong-pho'],
-        //     ['name'=>'Cột thép','slug'=>'cot-thep']
-        // ]);
-        // DB::table('products')->insert([
-        // 	['name'=>'Đèn sân vườn','price'=>1500000,'category_id'=>1],
-        // 	['name'=>'Đèn Halumos','price'=>1500000,'category_id'=>1]]
-        // );
+        $this->call(CategoryTableSeeder::class);
     }
 }
+
+class CategoryTableSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('categories')->insert([
+            ['name'=>'Đèn sân vườn','slug'=>'den-san-vuon'],
+            ['name'=>'Đèn đường phố','slug'=>'den-duong-pho'],
+            ['name'=>'Cột thép','slug'=>'cot-thep']
+        ]);
+    }
+}
+
 
 class ProductTableSeeder extends Seeder
 {
