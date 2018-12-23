@@ -364,4 +364,14 @@ Route::get('eloquent/delete', function () {
     App\Category::destroy(5);
 });
 
-//Bài 31 - Eloquent ORM - 
+//Bài 31 - Eloquent ORM
+
+//Bài 32 - Eloquent ORM - Relation One-Many
+//https://www.youtube.com/watch?v=DMjQvo-yxkc&index=33&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('eloquent/relation', function () {
+    $data = App\Product::find(3)->categories()->get()->toArray();
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});

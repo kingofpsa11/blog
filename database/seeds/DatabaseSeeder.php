@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CategoryTableSeeder::class);
+        $this->call(ProductTableSeeder::class);
     }
 }
 
@@ -42,10 +42,11 @@ class ProductTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('product')->insert([
+        DB::table('products')->insert([
             ['name'=>'Đèn Libra','cate_id'=>2],
             ['name'=>'Đèn Master','cate_id'=>2],
-            ['name'=>'Cột Indu','cate_id'=>2]
+            ['name'=>'Đèn Indu','cate_id'=>1],
+            ['name'=>'Cột BGC07','cate_id'=>3],
         ]);
 
     }
