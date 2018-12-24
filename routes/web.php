@@ -375,3 +375,34 @@ Route::get('eloquent/relation', function () {
     print_r($data);
     echo "<pre>";
 });
+
+//Bài 33 - Eloquent - Relation Many-Many
+//https://www.youtube.com/watch?v=LfbzlrvzD3s&index=35&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&t=0s
+//Dùng bảng trung gian car_colors
+
+Route::get('eloquent/relation/many-1', function () {
+    $data = App\Car::find(1)->colors()->get()->toArray(); //Phải có get() sau khi dùng hàm colors()
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+Route::get('eloquent/relation/many-2', function () {
+    $data = App\Color::find(2)->cars()->get()->toArray(); //Phải có get() sau khi dùng hàm cars()
+    echo "<pre>";
+    print_r($data);
+    echo "<pre>";
+});
+
+//Bài 34 - Form Request
+//https://www.youtube.com/watch?v=YeNvZQlgQH8&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=35
+// Install LaravelColective
+//https://laravelcollective.com/docs/master/html#installation
+
+Route::get('form/', function () {
+    return view('form.layout');
+});
+
+//Bài 35 - Form Request
+//https://www.youtube.com/watch?v=dJG8-B6ot1s&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=36
+

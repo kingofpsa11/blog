@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ProductTableSeeder::class);
+        $this->call(ColorTableSeeder::class);
     }
 }
 
@@ -65,6 +65,42 @@ class Product2TableSeeder extends Seeder
             ['name'=>'Đèn Toby','cate_id'=>1,'price'=>1500000],
             ['name'=>'Đèn Halumos','cate_id'=>1,'price'=>2500000],
             ['name'=>'Đèn Cara','cate_id'=>1,'price'=>3500000]
+        ]);
+    }
+}
+
+class CarTableSeeder extends Seeder {
+    public function run () {
+        DB::table('cars')->insert([
+            ['name'=>'BMW','price'=>140000000],
+            ['name'=>'Audi','price'=>150000000],
+            ['name'=>'Honda','price'=>160000000],
+            ['name'=>'Suzuki','price'=>170000000],
+            ['name'=>'Porsche','price'=>180000000],
+        ]);
+    }
+}
+
+class ColorTableSeeder extends Seeder {
+    public function run () {
+        DB::table('colors')->insert([
+            ['name'=>'red'],
+            ['name'=>'blue'],
+            ['name'=>'black'],
+            ['name'=>'green'],
+            ['name'=>'yellow'],
+        ]);
+    }
+}
+
+class CarColorTableSeeder extends Seeder {
+    public function run () {
+        DB::table('car_colors')->insert([
+            ['car_id'=>1,'color_id'=>2],
+            ['car_id'=>3,'color_id'=>2],
+            ['car_id'=>2,'color_id'=>1],
+            ['car_id'=>2,'color_id'=>3],
+            ['car_id'=>1,'color_id'=>4],
         ]);
     }
 }
