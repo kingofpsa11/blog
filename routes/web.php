@@ -406,3 +406,26 @@ Route::get('form/', function () {
 //Bài 35 - Form Request
 //https://www.youtube.com/watch?v=dJG8-B6ot1s&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=36
 
+//Bài 36 - Form Request
+//https://www.youtube.com/watch?v=Vqf-3kOp9lY&index=37&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('form/dang-ky', ['as' => 'dangky', function () {
+    return view('form.dangky');
+}]);
+
+Route::post('form/dang-ky-thanh-vien', ['as' => 'postDangKy', 'uses' => 'DangKyController@them']);
+
+//Bài 37 - Form Request - Validator
+//https://www.youtube.com/watch?v=iCkGUjphO54&index=38&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+// view: form/dangky.blade.php
+// controller: DangKyController
+
+//Bài 38 - Form Request - Request
+//https://www.youtube.com/watch?v=nHZ_KbPpazM&index=39&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+//Bài 39 - Form Request
+//https://www.youtube.com/watch?v=br39H07s7Sk&index=40&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::any('{all?}', 'HomeController@index')->where('all','(.*)');
+
+//Bài 40 - Form Request
