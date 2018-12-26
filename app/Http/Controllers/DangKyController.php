@@ -38,22 +38,25 @@ class DangKyController extends Controller
         // }
 
 
-        // $monhoc = new Monhoc;
-        // $monhoc->monhoc = $request->txtMonhoc;
-        // $monhoc->giatien = $request->txtGiatien;
-        // $monhoc->giangvien = $request->txtGiangvien;
-        // if ($monhoc->save()) {
-        //     return redirect('form/dang-ky');
-        // }
+        $monhoc = new Monhoc;
+        $monhoc->monhoc = $request->txtMonhoc;
+        $monhoc->giatien = $request->txtGiatien;
+        $monhoc->giangvien = $request->txtGiangvien;
+        $file = $request->file('fImages');
+        $monhoc->images = $file->getClientOriginalName();
+        $file->move('public/upload',$file->getClientOriginalName());
+        if ($monhoc->save()) {
+            return redirect('form/dang-ky');
+        }
 
         //Get file properties
-        $file = $request->file('Fimages');
-        echo $file->getClientOriginalName()."<br/>";
-        echo $file->getSize()."<br/>";
-        echo $file->getRealPath()."<br/>";
-        echo $file->getMimeType();
-        if ($file->move('public/upload',$file->getClientOriginalName())) {
-            echo ("Thanh cong");
-        }
+        // $file = $request->file('fImages');
+        // echo $file->getClientOriginalName()."<br/>";
+        // echo $file->getSize()."<br/>";
+        // echo $file->getRealPath()."<br/>";
+        // echo $file->getMimeType();
+        // if ($file->move('public/upload',$file->getClientOriginalName())) {
+        //     echo ("Thanh cong");
+        // }
     }
 }

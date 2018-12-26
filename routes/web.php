@@ -429,3 +429,5 @@ Route::post('form/dang-ky-thanh-vien', ['as' => 'postDangKy', 'uses' => 'DangKyC
 Route::any('{all?}', 'HomeController@index')->where('all','(.*)');
 
 //Bài 40 - Form Request
+//https://www.youtube.com/watch?v=br39H07s7Sk&index=40&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+

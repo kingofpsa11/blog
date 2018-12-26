@@ -23,20 +23,30 @@ class MonhocRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-            // 'txtMonhoc' => 'required|unique:monhocs,monhoc',
-            // 'txtGiatien' => 'required',
-            // 'txtGiangvien' => 'required',
+        return [ 
+            'txtMonhoc' => 'required|unique:monhocs,monhoc',
+            'txtGiatien' => 'required',
+            'txtGiangvien' => 'required',
+            'fImages' => 'required|image|max:100',
         ];
     }
 
     public function messages()
     {
         return [
-            // 'txtMonhoc.required' => 'Nhap mon hoc',
-            // 'txtGiatien.required' => 'Nhap gia tien',
-            // 'txtGiangvien.required' => 'Nhap giang vien',
+            'required' => ' Đề nghị nhập :attribute',
+            'txtMonhoc.unique' => 'Ten mon hoc da ton tai',
+            'fImages.image' => 'De nghi chi upload anh',
+            'fImages.max' => 'Vuot qua dung luong cho phep',
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'txtMonhoc' => 'Môn học',
+            'txtGiatien' => 'Giá tiền',
+            'txtGiangvien' => 'Giảng viên',
+            'fImages' => 'Ảnh',
         ];
     }
 }
