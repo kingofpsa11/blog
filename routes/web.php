@@ -426,8 +426,41 @@ Route::post('form/dang-ky-thanh-vien', ['as' => 'postDangKy', 'uses' => 'DangKyC
 //Bài 39 - Form Request
 //https://www.youtube.com/watch?v=br39H07s7Sk&index=40&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
 
-Route::any('{all?}', 'HomeController@index')->where('all','(.*)');
+// Route::any('{all?}', 'HomeController@index')->where('all','(.*)');
 
 //Bài 40 - Form Request
 //https://www.youtube.com/watch?v=br39H07s7Sk&index=40&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
 
+//Bài 41 - Form Request
+//https://www.youtube.com/watch?v=l0FEVwoYI90&t=253s&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=43
+
+//Bài 42 - Responses
+//https://www.youtube.com/watch?v=hQFd69x0duE&index=43&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('response/json', function () {
+    $arr = [
+        1 => 'hello',
+        2 => 'hi',
+        3 => 'bye',
+    ];
+
+    // return response()->json($arr);
+    return $arr;
+});
+
+Route::get('response/xml', function () {
+    $content = '<?xml version=1.0 encoding="UTF-8"?>
+        <root>
+            <trungtam>Khoa</trungtam>
+            <danhsach>
+                <monhoc>Lap trinh 1</monhoc>
+                <monhoc>Lap trinh 2</monhoc>
+            </danhsach>
+        <root>
+    ';
+    $status = 200;
+    $value = 'text/xml';
+    // return response($content,$status)->header('Content-Type', $value);
+    return response('Hello World', 200)
+        ->header('Content-Type', 'text/plain');
+});
