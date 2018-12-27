@@ -464,3 +464,34 @@ Route::get('response/xml', function () {
     // return response('Hello World', 200)
     //     ->header('Content-Type', 'text/plain');
 });
+
+//Bài 44 - Responses - MacroProvider
+//https://www.youtube.com/watch?v=syO1Rg6LyvQ&index=45&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('response/macro/cap', function () {
+    return response()->cap('Khoa hoc');
+});
+
+Route::get('response/macro/contact', function () {
+    return response()->contact('http://localhost/blog/response/macro/cap');
+});
+
+//Bài 45 - Authentication
+//https://www.youtube.com/watch?v=aEQoOXv9AkU&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=46
+
+// Route::get('auth/login', ['as'=>'getLogin', 'uses' => 'ThanhVienController@getLogin']);
+
+// Route::post('auth/login', ['as'=>'postLogin', 'uses' => 'ThanhVienController@postLogin']);
+
+//Bài 46, 47 - Authentication - Register
+//https://www.youtube.com/watch?v=3CYlL0tSgec&index=47&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('auth/register', ['as' => 'getRegister', 'uses' => 'Auth\RegisterController@getRegister']);
+Route::post('auth/register', ['as' => 'postRegister', 'uses' => 'Auth\RegisterController@postRegister']);
+
+//Bài 48 - Authentication - Login
+//https://www.youtube.com/watch?v=9er9PSgFJ7w&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=49
+
+Route::get('auth/login', ['as'=>'getLogin', 'uses' => 'Auth\LoginController@getLogin']);
+
+Route::post('auth/login', ['as'=>'postLogin', 'uses' => 'Auth\LoginController@postLogin']);

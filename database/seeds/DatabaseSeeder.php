@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ColorTableSeeder::class);
+        $this->call(ThanhvienTableSeeder::class);
     }
 }
 
@@ -101,6 +101,15 @@ class CarColorTableSeeder extends Seeder {
             ['car_id'=>2,'color_id'=>1],
             ['car_id'=>2,'color_id'=>3],
             ['car_id'=>1,'color_id'=>4],
+        ]);
+    }
+}
+
+class ThanhvienTableSeeder extends Seeder {
+    public function run () {
+        DB::table('thanh_viens')->insert([
+            ['user'=>'admin','pass'=>Hash::make(123456),'level'=>'1'],
+            ['user'=>'member','pass'=>bcrypt(123456),'level'=>'2'],
         ]);
     }
 }
