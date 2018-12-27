@@ -456,11 +456,11 @@ Route::get('response/xml', function () {
                 <monhoc>Lap trinh 1</monhoc>
                 <monhoc>Lap trinh 2</monhoc>
             </danhsach>
-        <root>
+        </root>
     ';
     $status = 200;
     $value = 'text/xml';
-    // return response($content,$status)->header('Content-Type', $value);
-    return response('Hello World', 200)
-        ->header('Content-Type', 'text/plain');
+    return response($content,$status)->header('Content-Type', $value);
+    // return response('Hello World', 200)
+    //     ->header('Content-Type', 'text/plain');
 });
