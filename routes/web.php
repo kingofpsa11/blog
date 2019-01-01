@@ -19,19 +19,20 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-//Bài 4
+//Bài 4 - Route cơ bản
 //https://www.youtube.com/watch?v=oNIPQtKKD8U&index=6&t=0s&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
 Route::get('welcome/{monhoc?}/{thoigian?}', function ($monhoc='hom nay',$thoigian='ngay mai'){
     return "hom nay la: $monhoc va $thoigian";
 })->where(['monhoc'=>'[0-9a-zA-Z]+','thoigian'=>'[a-zA-Z]{1,10}']);
 
 
-//Bài 5
+//Bài 5 - Route nâng cao
 //https://www.youtube.com/watch?v=eirDGD9Udcg&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=6
 
 Route::get('view', function () {
     $value = "Hello ngay moi";
-    return view('view',compact('value'));
+    return view('home',compact('value'));
 });
 
 Route::get('test-controller', 'TestController@test');
@@ -43,7 +44,7 @@ Route::get('dinh-danh', ['as' => 'dinhdanh',function () {
 Route::get('vao-dinh-danh', function () {
     return redirect()->route('dinhdanh');
 });
-Route::get('vao-dinh-danh-controller', 'TestController@chuyenHuong');
+Route::get('vao-dinh-danh-controller','TestController@chuyenHuong');
 
 //Tạo group trong Route
 Route::group(['prefix' => 'admin'], function () {
@@ -56,8 +57,9 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
-//Bài 6
+//Bài 6 - View
 //https://www.youtube.com/watch?v=x04TLqzRbC4
+
 //Phân cấp thư mục cho view
 Route::get('goi-view', function () {
     return view('root.view');
@@ -66,8 +68,10 @@ Route::get('goi-view', function () {
 Route::get('goi-view-2', function () {
     return view('root.view2');
 });
+
 //Tạo ra biến public $title
 view()->share('title', 'Lap trinh Laravel 5.x');
+
 //Share biến $thongtin cho 1 hoặc nhiều view xác định
 view()->composer(['root.view','root.view2'], function ($view) {
     return $view->with('thongtin','Day la trang thong tin');
@@ -82,15 +86,17 @@ Route::get('check-view', function () {
     }
 });
 
-//Bài 7
+//Bài 7 - Blade Template
 //https://www.youtube.com/watch?v=k3VQrkPgJcE&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=8
 //Blade template
 //Bao gồm: @yield, @section, @extends
-Route::get('goi-master', function () {
+Route::get('goi-sub', function () {
     return view('root.sub');
 });
 
-
+Route::get('goi-master', function () {
+    return view('root.master');
+});
 //Bài 8
 //https://www.youtube.com/watch?v=1GrXWa7885s&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=9
 // Hàm @if
@@ -104,6 +110,56 @@ Route::get('goi-master', function () {
 //for...while
 //foreach
 
+//Bài 10 - Blade
+//https://www.youtube.com/watch?v=-Q0HsqZzOVc&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=11
+//Dùng lệnh @include('file view',['biến' => 'giá trị của biến'])
+
+//Bài 11 - URL
+//https://www.youtube.com/watch?v=byC8n_6eVyk&index=12&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::get('url/full', function () {
+    return URL::full();
+});
+
+Route::get('url/asset', function () {
+    return asset('public/css/mystyle.css',true);
+});
+
+Route::get('url/to', function () {
+    return URL::to('welcome',['monhoc' => 'Pham Manh Ha','thoigian' => 'hom nay']);
+});
+
+Route::get('url/https', function () {
+    return secure_url('welcome',['monhoc' => 'Hom nay']);
+});
+
+//Bài 13 - Schema Builder
+//https://www.youtube.com/watch?v=SRvJjFl0K6s&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=14
+
+Route::get('schema/create', function () {
+    Schema::create('create_table', function ($table) {
+        $table->increments('id');
+        $table->string('name');
+        $table->timestamps();
+    });
+});
+
+//Bài 14 - Schema Builder
+//https://www.youtube.com/watch?v=C-HLy_UggTk&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=15
+
+Route::get('schema/rename', function () {
+    Schema::rename('create_table', 'renamed_table');
+});
+
+Route::get('schema/drop', function () {
+    Schema::dropIfExists('renamed_table');
+});
+
+Route::get('schema/change', function () {
+    Schema::table('renamed_table', function ($table) {
+        $table->string('name',255)->change();
+    });
+});
 
 //Bài 15 - Schema builder - Drop column in table
 //https://www.youtube.com/watch?v=VAt79RFi3nI&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=16
@@ -117,7 +173,7 @@ Route::get('schema/drop', function () {
     Schema::dropIfExists('laravel');
 });
 
-//Bài 16 - Schema builder - Foreign Keys
+//Bài 16,17 - Schema builder - Foreign Keys
 //https://www.youtube.com/watch?v=kVTzY7fXkBc&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=17
 Route::get('schema/create/category', function () {
     Schema::create('category', function ($table) {
@@ -364,7 +420,8 @@ Route::get('eloquent/delete', function () {
     App\Category::destroy(5);
 });
 
-//Bài 31 - Eloquent ORM
+//Bài 31 - Eloquent ORM - Giới thiệu về các kiểu quan hệ
+//https://www.youtube.com/watch?v=qNz2u-sJqPE&index=32&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
 
 //Bài 32 - Eloquent ORM - Relation One-Many
 //https://www.youtube.com/watch?v=DMjQvo-yxkc&index=33&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
@@ -431,8 +488,9 @@ Route::post('form/dang-ky-thanh-vien', ['as' => 'postDangKy', 'uses' => 'DangKyC
 //Bài 40 - Form Request
 //https://www.youtube.com/watch?v=br39H07s7Sk&index=40&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
 
-//Bài 41 - Form Request
+//Bài 41 - Form Request - File hình
 //https://www.youtube.com/watch?v=l0FEVwoYI90&t=253s&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=43
+//MonhocRequest
 
 //Bài 42 - Responses
 //https://www.youtube.com/watch?v=hQFd69x0duE&index=43&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
@@ -489,9 +547,23 @@ Route::get('response/macro/contact', function () {
 Route::get('auth/register', ['as' => 'getRegister', 'uses' => 'Auth\RegisterController@getRegister']);
 Route::post('auth/register', ['as' => 'postRegister', 'uses' => 'Auth\RegisterController@postRegister']);
 
-//Bài 48 - Authentication - Login
+//Bài 48,49 - Authentication - Login
 //https://www.youtube.com/watch?v=9er9PSgFJ7w&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv&index=49
 
 Route::get('auth/login', ['as'=>'getLogin', 'uses' => 'Auth\LoginController@getLogin']);
 
 Route::post('auth/login', ['as'=>'postLogin', 'uses' => 'Auth\LoginController@postLogin']);
+
+Route::get('auth/demo', function () {
+    return view('layout');
+});
+
+//Bài 50 - RESTful Controller - Giới thiệu
+//https://www.youtube.com/watch?v=jEYWYBQO7MA&index=51&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+Route::resource('hocsinh', 'HocSinhController');
+
+//Bài 51 - RESTful Controller - Giới thiệu RESTful trong Controller
+//https://www.youtube.com/watch?v=I2j65RSHUU0&index=52&list=PLqEKeWbzk0aTloUonoi7J_D6QslCc9VXv
+
+//Bài 52 - RESTful Controller - 

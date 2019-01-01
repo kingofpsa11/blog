@@ -52,9 +52,9 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
         if (Auth::attempt($auth)) {
-            return "Thanh cong";
+            return redirect('home');
         } else {
-            return "That bai";
+            return redirect()->route('auth.login');
         }
     }
 }

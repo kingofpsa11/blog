@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?php echo $__env->yieldContent('title'); ?></title>
-</head>
-<body>
-    <p>
-        <?php $__env->startSection('sidebar'); ?>
-            This is sidebar
-        <?php echo $__env->yieldSection(); ?>
-    </p>
-    <p>
-        <?php echo $__env->yieldContent('noidung'); ?>
-    </p>
-</body>
-</html>
+<?php $__env->startSection('title'); ?>
+    This is master
+<?php $__env->stopSection(); ?>
+<br/>
+<?php $__env->startSection('content'); ?>
+    ##parent-placeholder-040f06fd774092478d450774f5ba30c5da78acc8##
+    <br/>
+    This is content of Master<br/>
+    ##parent-placeholder-040f06fd774092478d450774f5ba30c5da78acc8##
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('root.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

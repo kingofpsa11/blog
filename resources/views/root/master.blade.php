@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title')</title>
-</head>
-<body>
-    <p>
-        @section('sidebar')
-            This is sidebar
-        @show
-    </p>
-    <p>
-        @yield('noidung')
-    </p>
-</body>
-</html>
+@extends('root.layout')
+
+@section('title')
+    This is master
+@endsection
+<br/>
+@section('content')
+    @parent
+    <br/>
+    This is content of Master<br/>
+    @parent
+@endsection
